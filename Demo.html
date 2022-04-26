@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>demo</title>
+    <link rel="stylesheet" href="./CSS/bootstrap.min.css">
+    <script src="./JS/jquery-3.6.0.min.js"></script>
+    <script src="./JS/bootstrap.min.js"></script>
+    <script src="./JS/index.js"></script>
+    <style>
+        .container {
+    width: 100%;
+    margin: auto;
+    text-align: center;
+}
+.list-item{
+    background-color: rgb(182, 166, 182);
+}
+/* Định dạng phần form đăng nhập*/
+
+
+    </style>
+<script>
+    alert("fề");
+    $(document).ready(function(){
+    var i=1;
+        $("#myBtn2").click(function(){
+            $("#myModal").modal();
+        });
+        function Kiemtraten() {
+            var i=1;
+            let mauKT = /([A-Z]{1}[a-z]+)((\s{1}[A-Z]{1}[a-z]+){1,})$/;
+            if ($("#Name").val() =="") {
+                $("#tbName").html("khong de trong");
+                return false;
+            }
+            if (!mauKT.test($("#Name").val())) {
+                $("#tbName"),html("Moi kytu dau viet hoa khong su dung so");
+                return true;
+            }
+            $("#tbName").html("*");
+            return true;
+        }
+        $("#Name").blur(Kiemtraten);
+
+        function kiemtrasoao(){
+            var mauKT = /^\d*$/;
+            if($("#Ao").val()==""){
+                $("#Ao").html("khong de trong");
+                return false;
+            }
+            if (!mauKT.test($("#Ao").val())) {
+                $("#tbAo"),html("dung so tu 1 den 100");
+                return true;
+        }else{
+            var soAo =$("#Ao").val();
+            if(soAo<1||soAo>100){
+                $("#tbAo").html("tu 1 den 100");
+            }else{
+                $("#tbName").html("*");
+                return true;
+            }
+        }
+    }
+            $("#Ao").blur(kiemtrasoao);
+
+        function kiemtradiachi(){
+            var mauKT = /^[A-Z0-9][a-z0-9]*(\s[A-A-Z0-9][a-z0-9]*)*$/;
+            if($("#DC").val()==""){
+                $("#DC").html("khong de trong");
+                return false;
+            }
+            if (!mauKT.test($("#DC").val())){
+                $("#DC").html("moi ky tu dau viet hoa khong su dung so");
+            return true;
+        }
+        $("#DC").blur(kiemtradiachi);
+
+        function kiemtraNTT() {
+            if($("#NTT").val()==""){
+             $("#tbNTT").html("ko de trong");
+            return false;
+        }
+        var today = new Date();
+        var ntt = new Date($("#NTT").val());
+        today =today.setDate(today.getDate()+7);
+        if(today>ntt){
+            $("#tbNTT").html("phai sau ngay hien tai 7 ngay");
+            return false;
+        }
+        $("#tbNTT").html("*");
+        return true;
+    }
+    $("#tbNTT").blur(kiemtraNTT);
+
+        function kiemtraSDT(){
+            var mauKT =/^0\d{3}-d{3}-\d{3}$/;
+            if ($("#SDT").val()=="") {
+                $("#SDT").html("khong de trong");
+                 return false;
+            }
+            if (!mauKT.test($("#SDT").val())) {
+                $("#tbSDT").html("theo dang 0xxx-xxx-xxx trong do x la so");
+                return true;
+            }
+            $("#tbSDT").html("*");
+            return true;
+        }
+        $("#SDT").blur(kiemtraSDT);
+        $("#Save").click(function () {
+            if (kiemtraten()==true && kiemtrasoao()==true && kiemtraSDT()==true && kiemtraNTT()==true && kiemtradiachi()==true) {
+                row = "<tr>";
+                    row += "<th>" +(i++) + "</th>";
+                    row += "<th>" + $("#Name").val() + "</th>";
+                    row += "<th>" + $("#Ao").val() + "</th>";
+                    row += "<th>" + $("#DC").val() + "</th>";
+                    row += "<th>" + $("#NTT").val() + "</th>";
+                    row += "<th>" + $("#SDT").val() + "</th>";
+                    row += "<th>" + $("#ADD").val() + "</th>";
+                    $("#list").append(row);
+                    $("#myModal").modal("hide");
+            }
+        })
+
+    })
+    </script>
+    <script>
+    $ (document).ready (function (e) {
+    jQuery.validator.addMethod ("ten", function( value, element ) {
+    return this.optional ( element ) || /^ [A-Z\ ]+$/.test ( value );
+    }, "Phai nhap dung ten!");
+    $ ("#fr").validate ({
+        rules:{
+            txtMS:{
+                    required:true,
+                    digits:true,
+                    rangelength: [8,8],
+            },
+            name:{
+                    required:true,
+                    ten:true,
+            },
+             txtEmail:{
+                    required:true,
+                    email:true,
+             }
+                    },
+        messages:{
+              txtMS:{
+                   required: "Phai nhap",
+                   digits:"MÃ SỐ CHỈ CHỨA SỐ !",
+                    rangelength: "MÃ CÓ 8 SỐ",
+               },
+                name: {
+                    required: "Phai nhap!",
+                    ten: "Phai nhap chu hoa va khoang trang!",
+                    required:"Phai nhap!",
+                },
+                txtEmail: {
+                    required:"Phai nhap!",           
+                    email:"Phai nhap dung kieu email!",
+                    }
+                }
+});
+var stt=1;
+$("#fr").submit (function(e) {
+if ($("#fr").valid ())
+{
+        var row="<tr><td>"+stt+"</td>";
+        row=row+"<td>"+$("#txtMS").val()+"</td>";
+        row=row+"<td>"+$("#name").val()+"</td>";
+        row=row+"<td>"+$("#txtEmail").val()+"</td><tr>";
+        $("#tb1SV").append(row);
+        stt++;
+        return false;
+    }
+return false;
+});
+});
+
+</script>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="col-xs-12">
+            <img src="./IMG/paner.jpg" alt="" width="100%">
+        </div>
+    <div class="col-xs-12">
+        <nav class="navbar-expand-sm bg-dark justify-content-center">
+            <ul class="navbar nav">
+                <li class="navbar-item"><a class="nav-link" href="#" style="margin-left: 400px;" id="myBtn" >login</a></li>
+                <li class="navbar-item"><a class="nav-link" href="#" style="margin-right: 400px;" id="myBtn2" data-toggle="modal"  data-target="#myModal">Sign up</a></li>
+
+               </button>
+            </ul>
+        </nav>
+    </div>  
+        <div class="row">
+    <div class="col-md-6">
+
+        <h4 style="text-align: center;">Danh sách đội tuyển Việt Nam</h4>
+            <table class="table table-bordered-hover">
+                <tr class="list-item">
+                    <th>STT</th>
+                    <th>Họ tên</th>
+                    <th>Số áo</th>
+                    <th>Câu Lạc bộ</th>
+                    <th>Ngày tập trung </th>
+                    <th>Điện thoại</th>
+                    <th>Ảnh dại diện</th>
+                </tr>
+            </table>
+
+    </div>
+</div>
+        <footer>
+            <div class="col-xs-12">
+                <p style="text-align: center;">Mã sinh viên......20053551................lớp DHCNTT16B</p>
+            </div>
+        </footer>
+    </div>
+    <div class="modal fade" role="dialog" id="myModal">
+        <div class="modal-dialog " style="margin-top: 10px;">
+        <div class="modal-content">
+        <div class="modal-header">
+        <h2 class="text-left">THÔNG TIN CÁ NHÂN</h2>
+        </div>
+        <div class="modal-body">
+        <form role="form" class="form-horizontal" style="margin-top: 10px;">
+           <div class="form-group">
+            <label for="name" class="control-label col-xs-3" aria-placeholder="cnss">full name:</label>
+            <div class="col-xs-9">
+                <input type="text" name="" id="name" class="form-control">
+                <span class="text-danger" id="name">*</span>
+            </div>
+            <label for="Ao" class="control-label col-xs-3">clothers number:</label>
+            <div class="col-xs-9" style="margin-bottom: 10px;">
+                <input type="text" name="" id="Ao" class="form-control">
+                <span class="text-danger" style="color: aqua;" id="Ao">*</span>
+            </div>
+            <label for="DC" class="control-label col-xs-3">address:</label>
+            <div class="col-xs-9">
+                <input type="text" name="" id="DC" class="form-control">
+                <span class="text-danger" style="color: aqua;"  id="DC">*</span>
+            </div>
+            <label for="NTT" class="control-label col-xs-3">gathering day:</label>
+            <div class="col-xs-9">
+                <input type="date" name="" id="NTT" class="form-control">
+                <span class="text-danger" style="color: aqua;"  id="NNT">*</span>
+            </div>
+            <label for="SDT" class="control-label col-xs-3">Phone:</label>
+            <div class="col-xs-9">
+                <input type="text" name="" id="SDT" class="form-control">
+                <span class="text-danger" style="color: aqua;"  id="SDT">*</span>
+            </div>
+            <label for="ADD" class="control-label col-xs-3">Avatar:</label>
+            <div class="col-xs-9">
+                <input type="file" name="" id="ADD" class="form-control">
+                <span class="text-danger" style="color: aqua;"  id="ADD">*</span>
+            </div>
+            <button class="btn btn-sucess btn-group-justified" id="Save" type="button" style="color: white;background-color: green;width: 100%;">Lưu</button>
+           </div>
+        </form>
+        </div>
+        </div>
+        </div>
+        </div>
+
+        
+
+    </div>
+
+
+</body>
+
+</html>
